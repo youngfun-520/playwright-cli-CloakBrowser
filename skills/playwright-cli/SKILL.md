@@ -322,7 +322,7 @@ npx --no-install playwright-cli --version
 When local version is available, use `npx playwright-cli` in all commands. Otherwise, install `playwright-cli` as a global command:
 
 ```bash
-npm install -g github:youngfun-520/playwright-cli-CloakBrowser
+npm install -g https://github.com/youngfun-520/playwright-cli-CloakBrowser/archive/refs/heads/main.tar.gz
 ```
 
 This fork installs the official CloakBrowser binary during `npm install`. Set `PLAYWRIGHT_CLI_SKIP_CLOAKBROWSER_INSTALL=1` only when the install environment should skip that download.

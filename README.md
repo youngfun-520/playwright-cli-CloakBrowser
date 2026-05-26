@@ -24,13 +24,15 @@ This package provides CLI interface into Playwright. If you are using **coding a
 ## Installation
 
 ```bash
-npm install -g github:youngfun-520/playwright-cli-CloakBrowser
+npm install -g https://github.com/youngfun-520/playwright-cli-CloakBrowser/archive/refs/heads/main.tar.gz
 playwright-cli --help
 ```
 
 Installing this fork also installs the official `cloakbrowser` package and downloads the CloakBrowser binary during `postinstall`. For CI or offline packaging where you want to skip that download, set `PLAYWRIGHT_CLI_SKIP_CLOAKBROWSER_INSTALL=1` before running `npm install`.
 
 The CloakBrowser integration uses the official `cloakbrowser` npm package instead of vendoring browser code, so tracking upstream CloakHQ/CloakBrowser releases is handled by bumping that dependency.
+
+Use the archive tarball URL above for global installs. On Windows, npm's `github:owner/repo` global install path can run lifecycle scripts from an unstable temporary git checkout.
 
 ### Installing skills
 
@@ -376,7 +378,7 @@ npx --no-install playwright-cli --version
 When local version is available, use `npx playwright-cli` in all commands. Otherwise, install `playwright-cli` as a global command:
 
 ```bash
-npm install -g github:youngfun-520/playwright-cli-CloakBrowser
+npm install -g https://github.com/youngfun-520/playwright-cli-CloakBrowser/archive/refs/heads/main.tar.gz
 ```
 
 ## Configuration file

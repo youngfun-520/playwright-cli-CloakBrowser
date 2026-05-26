@@ -9,7 +9,7 @@ allowed-tools: Bash(playwright-cli:*) Bash(npx:*) Bash(npm:*)
 ## Quick start
 
 ```bash
-# open new browser
+# open new CloakBrowser session
 playwright-cli open
 # navigate to a page
 playwright-cli goto https://playwright.dev
@@ -199,6 +199,10 @@ playwright-cli list --json
 
 ## Open parameters
 ```bash
+# Default browser is CloakBrowser
+playwright-cli open
+playwright-cli open --browser=CloakBrowser
+
 # Use specific browser when creating session
 playwright-cli open --browser=chrome
 playwright-cli open --browser=firefox
@@ -318,8 +322,10 @@ npx --no-install playwright-cli --version
 When local version is available, use `npx playwright-cli` in all commands. Otherwise, install `playwright-cli` as a global command:
 
 ```bash
-npm install -g @playwright/cli@latest
+npm install -g github:youngfun-520/playwright-cli-CloakBrowser
 ```
+
+This fork installs the official CloakBrowser binary during `npm install`. Set `PLAYWRIGHT_CLI_SKIP_CLOAKBROWSER_INSTALL=1` only when the install environment should skip that download.
 
 ## Example: Form submission
 

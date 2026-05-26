@@ -17,6 +17,7 @@
 import path from 'path';
 import { spawn } from 'child_process';
 import { test, expect } from '@playwright/test';
+import { chromium } from 'playwright-core';
 
 type CliResult = {
   output: string;
@@ -34,6 +35,7 @@ async function runCli(...args: string[]): Promise<CliResult> {
     const childProcess = spawn(process.execPath, [cliPath, ...args], {
       env: {
         ...process.env,
+        CLOAKBROWSER_BINARY_PATH: chromium.executablePath(),
         PLAYWRIGHT_CLI_INSTALLATION_FOR_TEST: test.info().outputPath(),
       },
       cwd: test.info().outputPath(),

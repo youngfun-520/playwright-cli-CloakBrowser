@@ -16,6 +16,13 @@
  */
 
 const { program } = require('playwright-core/lib/tools/cli-client/program');
+const { maybeApplyCloakBrowserMode } = require('./lib/cloakbrowserMode');
 const packageJson = require('./package.json');
 
-program({ embedderVersion: packageJson.version });
+(async () => {
+  await maybeApplyCloakBrowserMode(process.argv);
+  await program({ embedderVersion: packageJson.version });
+})().catch(error => {
+  console.error(`${error.name}: ${error.message}`);
+  process.exit(1);
+});

@@ -2,4 +2,6 @@
 !README.md
 !LICENSE
 !playwright-cli.js
+!lib/**
+!scripts/install-cloakbrowser.js
 !skills/**

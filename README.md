@@ -1,6 +1,6 @@
-# playwright-cli
+# playwright-cli-CloakBrowser
 
-Playwright CLI with SKILLS
+Playwright CLI with SKILLS, wired to CloakBrowser by default.
 
 ### Playwright CLI vs Playwright MCP
 
@@ -12,10 +12,11 @@ This package provides CLI interface into Playwright. If you are using **coding a
 
 ### Key Features
 
+- **CloakBrowser by default**. `playwright-cli open` launches the official CloakBrowser binary and `playwright-cli open --browser=CloakBrowser` selects the same path explicitly.
 - **Token-efficient**. Does not force page data into LLM.
 
 ### Requirements
-- Node.js 18 or newer
+- Node.js 20 or newer
 - Claude Code, GitHub Copilot, or any other coding agent.
 
 ## Getting Started
@@ -23,9 +24,13 @@ This package provides CLI interface into Playwright. If you are using **coding a
 ## Installation
 
 ```bash
-npm install -g @playwright/cli@latest
+npm install -g github:youngfun-520/playwright-cli-CloakBrowser
 playwright-cli --help
 ```
+
+Installing this fork also installs the official `cloakbrowser` package and downloads the CloakBrowser binary during `postinstall`. For CI or offline packaging where you want to skip that download, set `PLAYWRIGHT_CLI_SKIP_CLOAKBROWSER_INSTALL=1` before running `npm install`.
+
+The CloakBrowser integration uses the official `cloakbrowser` npm package instead of vendoring browser code, so tracking upstream CloakHQ/CloakBrowser releases is handled by bumping that dependency.
 
 ### Installing skills
 
@@ -70,6 +75,24 @@ Playwright CLI is headless by default. If you'd like to see the browser, pass `-
 
 ```bash
 playwright-cli open https://playwright.dev --headed
+```
+
+## CloakBrowser default
+
+`playwright-cli open` defaults to CloakBrowser:
+
+```bash
+playwright-cli open https://playwright.dev
+playwright-cli open https://playwright.dev --browser=CloakBrowser
+```
+
+To intentionally use a stock Playwright browser or installed browser channel, pass it explicitly:
+
+```bash
+playwright-cli open https://playwright.dev --browser=chrome
+playwright-cli open https://playwright.dev --browser=firefox
+playwright-cli open https://playwright.dev --browser=webkit
+playwright-cli open https://playwright.dev --browser=msedge
 ```
 
 ## Sessions
@@ -260,6 +283,7 @@ playwright-cli highlight --hide         # hide all page highlights
 ### Open parameters
 
 ```bash
+playwright-cli open --browser=CloakBrowser # explicit CloakBrowser mode
 playwright-cli open --browser=chrome    # use specific browser
 playwright-cli attach --extension=chrome # connect via Playwright Extension
 playwright-cli attach --cdp=chrome      # attach to running Chrome/Edge by channel
@@ -352,7 +376,7 @@ npx --no-install playwright-cli --version
 When local version is available, use `npx playwright-cli` in all commands. Otherwise, install `playwright-cli` as a global command:
 
 ```bash
-npm install -g @playwright/cli@latest
+npm install -g github:youngfun-520/playwright-cli-CloakBrowser
 ```
 
 ## Configuration file

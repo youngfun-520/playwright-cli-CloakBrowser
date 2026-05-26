@@ -180,7 +180,12 @@ Configure a browser session with specific settings when opening:
 # Open with config file
 playwright-cli open https://example.com --config=.playwright/my-cli.json
 
-# Open with specific browser
+# Default and explicit CloakBrowser sessions
+playwright-cli open https://example.com
+playwright-cli open https://example.com --browser=CloakBrowser
+
+# Open with a stock Playwright browser or installed channel
+playwright-cli open https://example.com --browser=chrome
 playwright-cli open https://example.com --browser=firefox
 
 # Open in headed mode

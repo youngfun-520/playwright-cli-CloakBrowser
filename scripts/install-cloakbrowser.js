@@ -19,6 +19,17 @@ async function defaultEnsureBinary() {
   return await ensureBinary();
 }
 
+function isMissingCloakBrowserDependency(error) {
+  return error && error.code === 'ERR_MODULE_NOT_FOUND' &&
+    typeof error.message === 'string' &&
+    error.message.includes("'cloakbrowser'");
+}
+
+function isNpmGitPreparationDirectory(cwd) {
+  const normalized = cwd.replace(/\\/g, '/').toLowerCase();
+  return normalized.includes('/_cacache/tmp/git-clone');
+}
+
 async function installCloakBrowser(options = {}) {
   const env = options.env || process.env;
   if (env.PLAYWRIGHT_CLI_SKIP_CLOAKBROWSER_INSTALL === '1' ||
@@ -28,7 +39,17 @@ async function installCloakBrowser(options = {}) {
   }
 
   const ensureBinary = options.ensureBinary || defaultEnsureBinary;
-  const binaryPath = await ensureBinary();
+  let binaryPath;
+  try {
+    binaryPath = await ensureBinary();
+  } catch (error) {
+    if (isMissingCloakBrowserDependency(error) &&
+        isNpmGitPreparationDirectory(options.cwd || process.cwd())) {
+      console.log('Skipping CloakBrowser binary install during npm git preparation.');
+      return { skipped: true, reason: 'cloakbrowser-unavailable' };
+    }
+    throw error;
+  }
   console.log(`CloakBrowser binary ready: ${binaryPath}`);
   return { skipped: false, binaryPath };
 }

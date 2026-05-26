@@ -44,3 +44,33 @@ test('postinstall ensures CloakBrowser binary by default', async () => {
   expect(result).toEqual({ skipped: false, binaryPath: 'C:\\cloak\\chrome.exe' });
   expect(called).toBe(true);
 });
+
+test('postinstall skips git preparation lifecycle when CloakBrowser dependency is not installed yet', async () => {
+  const moduleNotFoundError = Object.assign(
+      new Error("Cannot find package 'cloakbrowser' imported from scripts/install-cloakbrowser.js"),
+      { code: 'ERR_MODULE_NOT_FOUND' });
+
+  const result = await installCloakBrowser({
+    cwd: 'C:\\Users\\a1874\\AppData\\Local\\npm-cache\\_cacache\\tmp\\git-cloneabc123',
+    env: {},
+    ensureBinary: async () => {
+      throw moduleNotFoundError;
+    },
+  });
+
+  expect(result).toEqual({ skipped: true, reason: 'cloakbrowser-unavailable' });
+});
+
+test('postinstall fails when CloakBrowser dependency is missing outside git preparation', async () => {
+  const moduleNotFoundError = Object.assign(
+      new Error("Cannot find package 'cloakbrowser' imported from scripts/install-cloakbrowser.js"),
+      { code: 'ERR_MODULE_NOT_FOUND' });
+
+  await expect(installCloakBrowser({
+    cwd: 'C:\\Users\\a1874\\Documents\\playwright-cli-CloakBrowser',
+    env: {},
+    ensureBinary: async () => {
+      throw moduleNotFoundError;
+    },
+  })).rejects.toThrow("Cannot find package 'cloakbrowser'");
+});

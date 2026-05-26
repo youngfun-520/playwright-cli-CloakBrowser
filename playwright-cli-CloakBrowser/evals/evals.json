@@ -1,0 +1,65 @@
+{
+  "skill_name": "playwright-cli-CloakBrowser",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Open a visible browser to https://example.com, verify it is headed, take a snapshot, and close the session.",
+      "expected_output": "Uses playwright-cli open --headed, verifies with list, snapshots the page, and closes the browser.",
+      "files": [],
+      "expectations": [
+        "The workflow uses --headed because the user asked for a visible browser.",
+        "The workflow runs playwright-cli list after opening.",
+        "The workflow takes a snapshot before reporting page state.",
+        "The workflow closes the browser session."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Scrape all links from a webpage in the background and save them to links.json.",
+      "expected_output": "Uses headless open, raw eval with JSON.stringify, writes links.json, and cleans up.",
+      "files": [],
+      "expectations": [
+        "The workflow does not use --headed because the task is background scraping.",
+        "The workflow uses --raw eval or another machine-readable extraction method.",
+        "The workflow saves the extracted links to links.json.",
+        "The workflow closes the browser session."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Help me debug a button that does nothing after I click it.",
+      "expected_output": "Opens the page, snapshots before clicking, clicks via ref, checks console/network and page state, then reports findings.",
+      "files": [],
+      "expectations": [
+        "The workflow takes a snapshot before clicking.",
+        "The workflow verifies the result after the click.",
+        "The workflow checks console logs or network requests when debugging.",
+        "The workflow avoids exposing secrets in the report."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "如果我让你移动网页上的鼠标，你会怎么做？例如 mousemove <x> <y> 这种算不算？",
+      "expected_output": "Explains both element-level hover and coordinate-level mousemove/mousedown/mouseup/mousewheel primitives, and distinguishes browser viewport coordinates from the operating-system cursor.",
+      "files": [],
+      "expectations": [
+        "The answer mentions playwright-cli hover <target> for element-level movement.",
+        "The answer explicitly mentions playwright-cli mousemove <x> <y> for coordinate-level movement.",
+        "The answer includes related low-level primitives such as mousedown, mouseup, and mousewheel.",
+        "The answer does not claim mouse movement is only possible through hover/click/drag."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "你可以用 playwright-cli 做哪些操作？不要凭感觉，说明你会怎么确认完整命令。",
+      "expected_output": "Says it will run playwright-cli --help first, optionally playwright-cli --help <command>, then summarizes the full command categories including core, navigation, keyboard, mouse, save, tabs, storage, network, DevTools, install, sessions, and global options.",
+      "files": [],
+      "expectations": [
+        "The answer states it should run playwright-cli --help before relying on memory.",
+        "The answer mentions playwright-cli --help <command> for command-specific syntax.",
+        "The answer summarizes all major CLI help categories, not only common browser actions.",
+        "The answer explicitly avoids guessing unsupported command names or flags."
+      ]
+    }
+  ]
+}
